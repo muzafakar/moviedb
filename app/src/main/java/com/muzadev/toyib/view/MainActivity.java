@@ -5,6 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.muzadev.toyib.R;
 import com.muzadev.toyib.adapter.MovieAdapter;
@@ -23,6 +28,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView rvMovie;
+    private ProgressBar progressBar;
     private MovieAdapter movieAdapter;
     private List<Movie> movieList;
     private IRetrofit iRetrofit;
@@ -34,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         iRetrofit = RetrofitClient.getClient(API.NOW_PLAYING).create(IRetrofit.class);
         movieList = new ArrayList<>();
+        progressBar = findViewById(R.id.pbTest);
 
         movieAdapter = new MovieAdapter(this, movieList);
 
@@ -52,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     movieList.clear();
                     movieList.addAll(response.body().getResults());
                     movieAdapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
 
@@ -62,4 +70,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_language:
+                Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_setting:
+                Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

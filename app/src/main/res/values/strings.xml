@@ -2,4 +2,6 @@
     <string name="app_name">Toyib</string>
     <string name="read_more">Read More</string>
     <string name="tayang_tanggal">Tayang tanggal: </string>
+    <string name="setting">Setting</string>
+    <string name="language">Language</string>
 </resources>
