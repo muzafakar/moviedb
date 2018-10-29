@@ -1,5 +1,7 @@
 package com.muzadev.toyib.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -7,17 +9,30 @@ import java.io.Serializable;
  * For educational purposes
  */
 public class Movie implements Serializable {
+    @SerializedName("title")
     private String title;
+
+    @SerializedName("overview")
     private String description;
-    private String imageUrl;
+
+    @SerializedName("release_date")
+    private String date;
+
+    @SerializedName("poster_path")
+    private String url;
+
+    @SerializedName("vote_average")
+    private double rating;
 
     public Movie() {
     }
 
-    public Movie(String title, String description, String imageUrl) {
+    public Movie(String title, String description, String date, String url, long rating) {
         this.title = title;
         this.description = description;
-        this.imageUrl = imageUrl;
+        this.date = date;
+        this.url = url;
+        this.rating = rating;
     }
 
     public String getTitle() {
@@ -36,11 +51,28 @@ public class Movie implements Serializable {
         this.description = description;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getDate() {
+        return date;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }
+

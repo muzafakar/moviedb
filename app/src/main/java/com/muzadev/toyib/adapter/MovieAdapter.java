@@ -1,6 +1,7 @@
 package com.muzadev.toyib.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.muzadev.toyib.R;
+import com.muzadev.toyib.api.API;
 import com.muzadev.toyib.model.Movie;
+import com.muzadev.toyib.view.MovieDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -32,7 +35,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_moview, viewGroup, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_movie, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -46,7 +49,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         return movieList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvTitle;
         private TextView tvDescription;
         private Button btnReadMore;
@@ -64,12 +67,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         public void bind(final Movie movie) {
             tvTitle.setText(movie.getTitle());
             tvDescription.setText(movie.getDescription());
-            Picasso.get().load(movie.getImageUrl()).fit().centerCrop().into(imgMovie);
+            Picasso.get().load(API.POSTER + movie.getUrl())
+                    .placeholder(context.getResources().getDrawable(R.drawable.ic_blur))
+                    .fit()
+                    .centerCrop()
+                    .into(imgMovie);
 
             btnReadMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, movie.getTitle(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, MovieDetailActivity.class);
+                    intent.putExtra("movie", movie);
+                    context.startActivity(intent);
                 }
             });
         }
